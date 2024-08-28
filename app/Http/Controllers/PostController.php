@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -27,15 +28,26 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'title' => 'required',
+            'content' => 'required',
+            'category_id' => 'required|exists:categories,id',
+            'tags' => 'array|exists:tags,id',
+        ]);
+
+        $post = Post::create($validated);
+        $post->tags()->sync($request->tags);
+
+        return redirect()->route('posts.index');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $slug)
     {
-        //
+        $post = Post::where('slug', $slug)->firstOrFail();
+        return view('posts.show', compact('post'));
     }
 
     /**
@@ -43,7 +55,7 @@ class PostController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return view('posts.index', compact('post'));
     }
 
     /**
@@ -51,7 +63,7 @@ class PostController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        return view('posts.index', compact('post'));
     }
 
     /**
@@ -59,6 +71,6 @@ class PostController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        return view('posts.index', compact('post'));
     }
 }
