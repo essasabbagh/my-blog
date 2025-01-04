@@ -17,6 +17,11 @@ return new class extends Migration {
             $table->text('content');
             $table->text('excerpt')->nullable();
             $table->enum('status', ['draft', 'published', 'archived'])->default('draft');
+            $table->integer('user_id')->unsigned()->nullable();
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
             $table->timestamp('published_at')->nullable();
             $table->timestamps();
         });
