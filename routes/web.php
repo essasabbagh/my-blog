@@ -3,10 +3,15 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CategoryController;
 
 Route::view('/', 'welcome');
+
+Route::get('/chat', [ChatController::class, 'index'])->name('chat.index');
+Route::post('/chat/send', [ChatController::class, 'sendMessage'])->name('chat.send');
+
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
