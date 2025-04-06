@@ -3,8 +3,8 @@
 namespace App\Http\Livewire;
 
 use App\Models\Post;
-use App\Models\Category;
 use Livewire\Component;
+use App\Models\Category;
 use Livewire\WithPagination;
 
 class BlogPosts extends Component

@@ -1,12 +1,15 @@
 <?php
 
+use App\Livewire\Pages\Home;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CategoryController;
 
-Route::view('/', 'welcome');
+Route::get('/', Home::class);
+    // ->middleware(['auth', 'verified'])
+    // ->name('home');
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
